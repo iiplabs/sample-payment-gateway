@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class UtilTest {
 
 	@Test
-	public void base64CodeDecode() {
+	public void testBase64CodeDecode() {
 		String email = "test@internet.org";
 		String encodedEmail = StringUtil.toBase64(email);
 		
@@ -18,4 +18,11 @@ public class UtilTest {
 		assertEquals(email, decodedEmail);
 	}
 	
+	@Test
+	public void testMaskedPan() {
+		 String source = "4024007197526238";
+		 // leave last 4 characters un-masked
+		 assertEquals("************6238", StringUtil.maskString(source, 0, 12, '*'));
+	}
+
 }

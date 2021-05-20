@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.iiplabs.spg.web.utils.serializers.AllMaskSerializer;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,6 +31,7 @@ import lombok.ToString;
 @Table(name="cardholders")
 public class CardHolder extends BaseModel {
 
+	@JsonSerialize(using=AllMaskSerializer.class)
 	@EqualsAndHashCode.Include
 	@Convert(converter=EncryptedContentConverter.class)
 	@Column(name="name")

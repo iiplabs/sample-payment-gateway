@@ -6,6 +6,8 @@ import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
+import org.apache.commons.lang3.StringUtils;
+
 public final class StringUtil {
 
 	public static String fromBase64(String base64) throws IllegalArgumentException {
@@ -29,6 +31,34 @@ public final class StringUtil {
 
 	public static String toBase64(String v) {
 		return Base64.getEncoder().withoutPadding().encodeToString(v.getBytes());
+	}
+
+	public static String maskString(String source, int start, int end, char maskChar) {
+		if (source == null || source.equals("")) {
+			return "";
+		}
+
+		if (start < 0) {
+			start = 0;
+		}
+
+		if (end > source.length()) {
+			end = source.length();
+		}
+		
+		if (start > end) {
+			throw new IllegalArgumentException("End index greater than start index");
+		}
+
+		int maskLength = end - start;
+
+		if (maskLength == 0) {
+			return source;
+		}
+
+		String strMaskString = StringUtils.repeat(maskChar, maskLength);
+
+		return StringUtils.overlay(source, strMaskString, start, end);
 	}
 
 	private StringUtil() {

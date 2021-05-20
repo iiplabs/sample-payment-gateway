@@ -12,6 +12,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.iiplabs.spg.web.utils.serializers.AllMaskSerializer;
+import com.iiplabs.spg.web.utils.serializers.PanMaskSerializer;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,11 +32,13 @@ import lombok.ToString;
 @Table(name="cards")
 public class Card extends BaseModel {
 
+	@JsonSerialize(using=PanMaskSerializer.class)
 	@EqualsAndHashCode.Include
 	@Convert(converter=EncryptedContentConverter.class)
 	@Column(name="pan")
 	private String pan;
 
+	@JsonSerialize(using=AllMaskSerializer.class)
 	@EqualsAndHashCode.Include
 	@Convert(converter=EncryptedContentConverter.class)
 	@Column(name="expiry")
