@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <variable name="AUDIT_JSON" value="${AUDIT_JSON}" />
+
     <appender name="Console"
         class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -11,7 +13,7 @@
     
     <appender name="AuditTrail"
         class="ch.qos.logback.core.FileAppender">
-        <File>${env:AUDIT_JSON}</File>
+        <File>${AUDIT_JSON}</File>
         <append>true</append>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>%msg%n</pattern>

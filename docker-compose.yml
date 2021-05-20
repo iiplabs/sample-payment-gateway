@@ -26,6 +26,8 @@ services:
     restart: always
     ports:
       - '${BE_SERVER_PORT}:${BE_SERVER_PORT}'
+    volumes:
+      - ./tmpvol:/tmp
     environment: 
       AUDIT_JSON: ${AUDIT_JSON}
       BE_SERVER_PORT: ${BE_SERVER_PORT}
