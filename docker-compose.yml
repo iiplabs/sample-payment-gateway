@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  mysql:
+    container_name: spg-db
+    image: mysql/mysql-server:8.0.23
+    command: --default-authentication-plugin=mysql_native_password --lower_case_table_names=1
+    restart: always
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./docker/db/scripts/backend:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${SQL_DATABASE}
+      MYSQL_USER: ${SQL_USER}
+      MYSQL_PASSWORD: ${SQL_PASSWORD}
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '${MYSQL_PORT}:3306'
+
+  backend:
+    build:
+      context: ./backend/
+    image: spg-backend:latest
+    container_name: spg-backend
+    restart: always
+    ports:
+      - '${BE_SERVER_PORT}:${BE_SERVER_PORT}'
+    environment: 
+      BE_SERVER_PORT: ${BE_SERVER_PORT}
+      BE_DB_URL: ${BE_DB_URL}
+      BE_DB_USER: ${BE_DB_USER}
+      BE_DB_PASSWORD: ${BE_DB_PASSWORD}
+    depends_on:
+      - mysql
+
+volumes:
+  db-data:
