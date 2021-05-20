@@ -1,5 +1,6 @@
 package com.iiplabs.spg.web.services;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import com.iiplabs.spg.web.model.Card;
@@ -27,6 +28,9 @@ public class PaymentService implements IPaymentService {
 
 		@Autowired
 		private IPaymentRepository payments;
+
+		@Autowired
+		private IAuditService auditService;
 
 		@Transactional(readOnly=true)
 		@Override
@@ -63,6 +67,9 @@ public class PaymentService implements IPaymentService {
 						payments.save(payment);
 
 						// save audit trail
+						// part of the same transaction,
+						// as per specs
+						auditService.writeToAudit(Arrays.asList(payment));
 				}
 				return transactionStatus;
 		}

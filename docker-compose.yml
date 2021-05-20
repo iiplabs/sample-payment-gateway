@@ -27,6 +27,7 @@ services:
     ports:
       - '${BE_SERVER_PORT}:${BE_SERVER_PORT}'
     environment: 
+      AUDIT_JSON: ${AUDIT_JSON}
       BE_SERVER_PORT: ${BE_SERVER_PORT}
       BE_DB_URL: ${BE_DB_URL}
       BE_DB_USER: ${BE_DB_USER}
