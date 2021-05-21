@@ -25,7 +25,11 @@ public class AuditService implements IAuditService {
       } catch (JsonProcessingException e) {
         e.printStackTrace();
       }
-      log.info(serializedOutput);
+      if (serializedOutput != null) {
+        log.info(serializedOutput);
+      } else {
+        log.info("{'error' : 'problem serializing invoice " + t.getInvoice() + "'}");
+      }
     });
   }
   
