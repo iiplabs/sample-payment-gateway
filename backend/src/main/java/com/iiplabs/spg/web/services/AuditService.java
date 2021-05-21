@@ -23,6 +23,7 @@ public class AuditService implements IAuditService {
       try {
         serializedOutput = MAPPER.writeValueAsString(t);
       } catch (JsonProcessingException e) {
+        // can't use logger
         e.printStackTrace();
       }
       if (serializedOutput != null) {
@@ -34,4 +35,5 @@ public class AuditService implements IAuditService {
   }
   
   private static final ObjectMapper MAPPER = new ObjectMapper();
+  
 }
