@@ -1,7 +1,6 @@
 package com.iiplabs.spg.web.model;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,17 +28,14 @@ import lombok.ToString;
 public class Payment extends BaseModel {
 
 	@EqualsAndHashCode.Include
-	@Convert(converter=EncryptedContentConverter.class)
 	@Column(name="invoice")
 	private String invoice;
 
 	@EqualsAndHashCode.Include
-	@Convert(converter=EncryptedAmountConverter.class)
 	@Column(name="amount")
 	private int amount;
 	
 	@EqualsAndHashCode.Include
-	@Convert(converter=EncryptedContentConverter.class)
 	@Column(name="currency")
 	private String currency;
 	
