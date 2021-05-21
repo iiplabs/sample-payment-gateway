@@ -38,7 +38,6 @@ public class CardHolder extends BaseModel {
 	private String name;
 
 	@EqualsAndHashCode.Include
-	@Convert(converter=EncryptedContentConverter.class)
 	@Column(name="email")
 	private String email;
 
