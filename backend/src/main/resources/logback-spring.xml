@@ -20,7 +20,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.iiplabs.spg.web.services.AuditService" level="info" additivity="false">
+    <logger name="AuditLogger" level="info" additivity="false">
         <appender-ref ref="AuditTrail" />
     </logger>
 
