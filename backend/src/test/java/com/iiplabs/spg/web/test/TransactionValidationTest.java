@@ -64,10 +64,20 @@ public class TransactionValidationTest {
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
+        // 0
+        paymentDto.setAmount("0");
+        response = TransactionUtil.validateTransaction(paymentDto);
+        assertFalse(response.isApproved());
+
         // negative
         paymentDto.setAmount("-1299");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
+
+        // leading 000
+        paymentDto.setAmount("01299");
+        response = TransactionUtil.validateTransaction(paymentDto);
+        assertTrue(response.isApproved());
     }
 
     @Test

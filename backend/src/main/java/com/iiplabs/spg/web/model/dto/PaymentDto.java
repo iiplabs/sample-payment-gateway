@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.iiplabs.spg.web.validators.Amount;
 import com.iiplabs.spg.web.validators.Currency;
 
 import lombok.Data;
@@ -20,7 +20,8 @@ public class PaymentDto implements Serializable {
     @Size(min=1, max=50, message="{validation.invalid_invoice}")
     private String invoice;
 
-    @Amount
+    @NotNull(message="{validation.invalid_amount}")
+    @Pattern(regexp="^\\d*[1-9]\\d*$", message="{validation.invalid_amount}")
     private String amount;
 
     @Currency
