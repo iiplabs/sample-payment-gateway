@@ -4,15 +4,13 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import lombok.Builder;
-import lombok.Value;
-import lombok.extern.jackson.Jacksonized;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Value
-@Builder
-@Jacksonized
+@AllArgsConstructor
+@Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public final class TransactionResponseDto {
+public class TransactionResponseDto {
   
     Map<String, String> errors;
     

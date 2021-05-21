@@ -20,7 +20,7 @@ public final class TransactionUtil {
 		Map<String, String> errors = VALIDATOR.validate(paymentDto).stream()
             .collect(Collectors.toMap(o -> TransactionUtil.getFieldName(o.getPropertyPath()), ConstraintViolation::getMessage));
         
-        return TransactionResponseDto.builder().errors(errors).build();
+        return new TransactionResponseDto(errors);
     }
 
     /**
