@@ -31,8 +31,7 @@ CREATE TABLE payments (
   card_holder bigint unsigned,
   card bigint unsigned,
   optlock int unsigned DEFAULT 0,
-  PRIMARY KEY (id),
-  UNIQUE KEY invoice_UNIQUE (invoice)
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 commit;
