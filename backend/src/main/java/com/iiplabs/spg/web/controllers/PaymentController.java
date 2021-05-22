@@ -11,7 +11,6 @@ import com.iiplabs.spg.web.model.dto.TransactionResponseDto;
 import com.iiplabs.spg.web.services.IPaymentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,9 +35,9 @@ public class PaymentController {
 		}
 		
 		@PostMapping("/payments")
-		public HttpEntity<TransactionResponseDto> addPayment(@Valid @RequestBody PaymentDto paymentDto) {
+		public ResponseEntity<TransactionResponseDto> addPayment(@Valid @RequestBody PaymentDto paymentDto) {
 				paymentService.addPayment(paymentDto);
-				return new HttpEntity<>(new TransactionResponseDto());
+				return ResponseEntity.ok(new TransactionResponseDto());
 		}
 
 }
