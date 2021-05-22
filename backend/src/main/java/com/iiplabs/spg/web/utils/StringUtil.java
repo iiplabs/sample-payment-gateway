@@ -5,6 +5,11 @@ import org.apache.commons.lang3.StringUtils;
 
 public final class StringUtil {
 
+	public static String getLastField(String path) {
+		String[] a = path.split("\\.");
+		return a[a.length - 1];
+	}
+	
 	public static String fromBase64(String base64) throws IllegalArgumentException {
 		return new String(Base64.decodeBase64(base64.getBytes()));
 	}

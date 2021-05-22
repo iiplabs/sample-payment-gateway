@@ -7,7 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -42,7 +41,7 @@ public class CardHolder extends BaseModel {
 	private String email;
 
 	@JsonIgnore
-	@OneToMany(mappedBy="card", fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy="card", cascade=CascadeType.ALL, orphanRemoval=true)
 	private Set<Payment> payments = new HashSet<>();
 
 	public void addPayment(Payment payment) {

@@ -25,7 +25,6 @@ public class AuditService implements IAuditService {
       try {
         serializedOutput = MAPPER.writeValueAsString(t);
       } catch (JsonProcessingException e) {
-        // can't use logger
         log.error(e, e);
       }
       if (serializedOutput != null) {

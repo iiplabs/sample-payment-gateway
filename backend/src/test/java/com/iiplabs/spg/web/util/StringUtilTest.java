@@ -1,4 +1,4 @@
-package com.iiplabs.spg.web.test;
+package com.iiplabs.spg.web.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -6,7 +6,7 @@ import com.iiplabs.spg.web.utils.StringUtil;
 
 import org.junit.jupiter.api.Test;
 
-public class UtilTest {
+public class StringUtilTest {
 
 	@Test
 	public void testBase64CodeDecode() {
@@ -18,6 +18,18 @@ public class UtilTest {
 		assertEquals(email, decodedEmail);
 	}
 	
+	@Test
+	public void testGoodLastField() {
+		String source = "card.expiry";
+		assertEquals("expiry", StringUtil.getLastField(source));
+	}
+
+	@Test
+	public void testBadLastField() {
+		String source = "expiry";
+		assertEquals("expiry", StringUtil.getLastField(source));
+	}
+
 	@Test
 	public void testMaskedPan() {
 		 String source = "4024007197526238";

@@ -1,11 +1,8 @@
-package com.iiplabs.spg.web.test;
+package com.iiplabs.spg.web.reps;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.iiplabs.spg.web.App;
-import com.iiplabs.spg.web.reps.ICardHolderRepository;
-import com.iiplabs.spg.web.reps.ICardRepository;
-import com.iiplabs.spg.web.reps.IPaymentRepository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

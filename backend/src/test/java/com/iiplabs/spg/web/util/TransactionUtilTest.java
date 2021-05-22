@@ -1,4 +1,4 @@
-package com.iiplabs.spg.web.test;
+package com.iiplabs.spg.web.util;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -11,18 +11,18 @@ import com.iiplabs.spg.web.utils.TransactionUtil;
 
 import org.junit.jupiter.api.Test;
 
-public class TransactionValidationTest {
+public class TransactionUtilTest {
 
     @Test
     public void testApproved() {
-        PaymentDto paymentDto = TransactionValidationTest.getGoodTest();
+        PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
         TransactionResponseDto response = TransactionUtil.validateTransaction(paymentDto);
         assertTrue(response.isApproved());
     }
 
     @Test
     public void testDeclinedInvoice() {
-        PaymentDto paymentDto = TransactionValidationTest.getGoodTest();
+        PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
 
         // invoice isn't set
         paymentDto.setInvoice(null);
@@ -42,7 +42,7 @@ public class TransactionValidationTest {
 
     @Test
     public void testDeclinedAmount() {
-        PaymentDto paymentDto = TransactionValidationTest.getGoodTest();
+        PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
 
         // not set
         paymentDto.setAmount(null);
@@ -82,7 +82,7 @@ public class TransactionValidationTest {
 
     @Test
     public void testDeclinedCurrency() {
-        PaymentDto paymentDto = TransactionValidationTest.getGoodTest();
+        PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
 
         // not set
         paymentDto.setCurrency(null);
@@ -102,7 +102,7 @@ public class TransactionValidationTest {
 
     @Test
     public void testDeclinedCardholderName() {
-      PaymentDto paymentDto = TransactionValidationTest.getGoodTest();
+      PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
 
       // CardholderName isn't set
       paymentDto.getCardHolder().setName(null);
@@ -122,7 +122,7 @@ public class TransactionValidationTest {
 
     @Test
     public void testDeclinedEmail() {
-      PaymentDto paymentDto = TransactionValidationTest.getGoodTest();
+      PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
 
       // Email isn't set
       paymentDto.getCardHolder().setEmail(null);
@@ -146,7 +146,7 @@ public class TransactionValidationTest {
 
     @Test
     public void testDeclinedPan() {
-      PaymentDto paymentDto = TransactionValidationTest.getGoodTest();
+      PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
 
       // PAN isn't set
       paymentDto.getCard().setPan(null);
@@ -171,7 +171,7 @@ public class TransactionValidationTest {
 
     @Test
     public void testDeclinedCardExpired() {
-      PaymentDto paymentDto = TransactionValidationTest.getGoodTest();
+      PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
 
       // Expiry isn't set
       paymentDto.getCard().setExpiry(null);
@@ -201,7 +201,7 @@ public class TransactionValidationTest {
 
     @Test
     public void testDeclinedCvv() {
-      PaymentDto paymentDto = TransactionValidationTest.getGoodTest();
+      PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
       // CVV isn't set
       paymentDto.getCard().setCvv(null);
       TransactionResponseDto response = TransactionUtil.validateTransaction(paymentDto);
