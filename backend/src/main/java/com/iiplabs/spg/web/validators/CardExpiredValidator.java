@@ -1,7 +1,6 @@
 package com.iiplabs.spg.web.validators;
 
-import java.time.DateTimeException;
-import java.time.LocalDate;
+import java.time.YearMonth;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -26,14 +25,14 @@ public class CardExpiredValidator implements ConstraintValidator<CardExpired, St
             return true;
         }
 
-        LocalDate expiredDate = null;
+        YearMonth expiredDate = null;
         try {
-            expiredDate = CreditCardUtil.getLocalDateFromExpiry(cardExpired);
+            expiredDate = CreditCardUtil.getYearMonthFromExpiry(cardExpired);
         } catch (Exception e) {
             log.error(e);
         }
 
-        return expiredDate != null && expiredDate.isAfter(LocalDate.now());
+        return expiredDate != null && expiredDate.isAfter(YearMonth.now());
 	}
 
 }

@@ -3,7 +3,7 @@ package com.iiplabs.spg.web.model.dto;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
 
 import com.iiplabs.spg.web.validators.CardExpired;
 
@@ -19,12 +19,12 @@ public class CardDto implements Serializable {
     private String pan;
 
     @NotNull(message="{validation.invalid_expiry}")
-    @Size(min=4, max=4, message="{validation.invalid_expiry}")
+    @Pattern(regexp="^\\d{4}$", message="{validation.invalid_expiry}")
     @CardExpired
     private String expiry;
 
     @NotNull(message="{validation.invalid_cvv}")
-    @Size(min=3, max=3, message="{validation.invalid_cvv}")
+    @Pattern(regexp="^\\d{3}$", message="{validation.invalid_cvv}")
     private String cvv;
     
 }
