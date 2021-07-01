@@ -7,8 +7,6 @@ import com.iiplabs.spg.web.model.Card;
 import com.iiplabs.spg.web.model.CardHolder;
 import com.iiplabs.spg.web.model.Payment;
 import com.iiplabs.spg.web.model.dto.PaymentDto;
-import com.iiplabs.spg.web.reps.ICardHolderRepository;
-import com.iiplabs.spg.web.reps.ICardRepository;
 import com.iiplabs.spg.web.reps.IPaymentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PaymentService implements IPaymentService {
-
-	@Autowired
-	private ICardRepository cards;
-
-	@Autowired
-	private ICardHolderRepository cardHolders;
 
 	@Autowired
 	private IPaymentRepository payments;
@@ -43,23 +35,23 @@ public class PaymentService implements IPaymentService {
 		Payment payment = new Payment();
 		payment.setAmount(paymentDto.getIntAmount());
 
-		Card card = new Card();
-		card.setExpiry(paymentDto.getCard().getExpiry());
-		card.setPan(paymentDto.getCard().getPan());
-		card.addPayment(payment);
-		payment.setCard(card);
+		if (paymentDto.getCard() != null) {
+			Card card = new Card();
+			card.setExpiry(paymentDto.getCard().getExpiry());
+			card.setPan(paymentDto.getCard().getPan());
+			payment.setCard(card);
+		}
 
-		CardHolder cardHolder = new CardHolder();
-		cardHolder.setEmail(paymentDto.getCardHolder().getEmail());
-		cardHolder.setName(paymentDto.getCardHolder().getName());
-		cardHolder.addPayment(payment);
-		payment.setCardHolder(cardHolder);
+		if (paymentDto.getCardHolder() != null) {
+			CardHolder cardHolder = new CardHolder();
+			cardHolder.setEmail(paymentDto.getCardHolder().getEmail());
+			cardHolder.setName(paymentDto.getCardHolder().getName());
+			payment.setCardHolder(cardHolder);
+		}
 
 		payment.setCurrency(paymentDto.getCurrency());
 		payment.setInvoice(paymentDto.getInvoice());
 
-		cards.save(card);
-		cardHolders.save(cardHolder);
 		payments.save(payment);
 
 		// save audit trail

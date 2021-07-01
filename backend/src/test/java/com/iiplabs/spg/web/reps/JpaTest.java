@@ -14,18 +14,10 @@ import org.springframework.test.context.ContextConfiguration;
 public class JpaTest {
 
 	@Autowired
-	private ICardRepository cards;
-
-	@Autowired
-	private ICardHolderRepository cardHolders;
-	
-	@Autowired
 	private IPaymentRepository paymentRepository;
 
 	@Test
 	void injectedComponents() {
-		assertThat(cards).isNotNull();
-		assertThat(cardHolders).isNotNull();
 		assertThat(paymentRepository).isNotNull();
 	}
 	

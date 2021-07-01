@@ -1,15 +1,11 @@
 package com.iiplabs.spg.web.model;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -38,16 +34,12 @@ public class Payment extends BaseModel {
 	@EqualsAndHashCode.Include
 	@Column(name="currency")
 	private String currency;
-	
-	@ManyToOne
-	@JoinColumn(name="card")
-	@Fetch(FetchMode.JOIN)
+
+	@Embedded
 	private Card card;
 
 	@JsonProperty("cardholder")
-	@ManyToOne
-	@JoinColumn(name="card_holder")
-	@Fetch(FetchMode.JOIN)
+	@Embedded
 	private CardHolder cardHolder;
 	
 }

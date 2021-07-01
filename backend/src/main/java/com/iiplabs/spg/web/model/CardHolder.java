@@ -1,16 +1,11 @@
 package com.iiplabs.spg.web.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.iiplabs.spg.web.utils.serializers.AllMaskSerializer;
 
@@ -24,11 +19,10 @@ import lombok.ToString;
 @Setter 
 @RequiredArgsConstructor 
 @ToString(callSuper=true) 
-@EqualsAndHashCode(callSuper=true, onlyExplicitlyIncluded=true)
+@EqualsAndHashCode(onlyExplicitlyIncluded=true)
 @SuppressWarnings("serial")
-@Entity
-@Table(name="cardholders")
-public class CardHolder extends BaseModel {
+@Embeddable
+public class CardHolder implements Serializable {
 
 	@JsonSerialize(using=AllMaskSerializer.class)
 	@EqualsAndHashCode.Include
@@ -39,13 +33,5 @@ public class CardHolder extends BaseModel {
 	@EqualsAndHashCode.Include
 	@Column(name="email")
 	private String email;
-
-	@JsonIgnore
-	@OneToMany(mappedBy="card", cascade=CascadeType.ALL, orphanRemoval=true)
-	private Set<Payment> payments = new HashSet<>();
-
-	public void addPayment(Payment payment) {
-		payments.add(payment);
-	}
 
 }

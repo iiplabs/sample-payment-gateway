@@ -1,7 +1,6 @@
 FROM maven:3.6.3-jdk-11-slim AS buildOne
 WORKDIR /app
 COPY . /app
-RUN mvn test
 RUN mvn package
 
 FROM adoptopenjdk:11-jre-hotspot as buildTwo
