@@ -4,11 +4,13 @@ import java.util.Collection;
 
 import javax.validation.Valid;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.iiplabs.spg.web.annotations.RestControllerAnnotation;
 import com.iiplabs.spg.web.model.Payment;
 import com.iiplabs.spg.web.model.dto.PaymentDto;
 import com.iiplabs.spg.web.model.dto.TransactionResponseDto;
 import com.iiplabs.spg.web.services.IPaymentService;
+import com.iiplabs.spg.web.views.Views;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +30,7 @@ public class PaymentController {
 		@Autowired
 		private IPaymentService paymentService;
 		
+		@JsonView(Views.Public.class)
 		@GetMapping("/payments/{invoice}")
 		public ResponseEntity<Collection<Payment>> getPayment(@PathVariable String invoice) {
 				Collection<Payment> c = paymentService.findByInvoice(invoice);

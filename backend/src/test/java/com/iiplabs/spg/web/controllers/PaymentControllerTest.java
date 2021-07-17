@@ -9,8 +9,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iiplabs.spg.web.model.dto.CardDto;
 import com.iiplabs.spg.web.model.dto.CardHolderDto;
 import com.iiplabs.spg.web.model.dto.PaymentDto;
+import com.iiplabs.spg.web.services.IPaymentService;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -30,8 +34,11 @@ public class PaymentControllerTest {
   @Autowired
 	private MockMvc mockMvc;
   
+  @Mock
+  private IPaymentService paymentService;
+  
   @Autowired
-  PaymentController paymentController;
+  private PaymentController paymentController;
 
   @Autowired
   private ObjectMapper objectMapper;
@@ -39,6 +46,11 @@ public class PaymentControllerTest {
   final private String testJsonPaymentDto = "{\"invoice\":\"1234567\",\"amount\":\"1299\",\"currency\":\"EUR\",\"card\":{\"pan\":\"4024007197526238\",\"expiry\":\"0624\",\"cvv\":\"789\"},\"cardholder\":{\"name\":\"First Last\",\"email\":\"test@domain.com\"}}";
   final private String testJsonPaymentDtoBadRequest = "{\"invoice\":\"1234567}";
   final private String testJsonPaymentDtoEmptyInvoice = "{\"invoice\":\"\",\"amount\":\"1299\",\"currency\":\"EUR\",\"card\":{\"pan\":\"4024007197526238\",\"expiry\":\"0624\",\"cvv\":\"789\"},\"cardholder\":{\"name\":\"First Last\",\"email\":\"test@domain.com\"}}";
+
+  @BeforeAll
+  public static void setup() {
+    //
+  }
 
   @Test
 	public void contextLoads() {
@@ -50,6 +62,25 @@ public class PaymentControllerTest {
     assertThat(paymentController).isNotNull();
   }
 
+  @Test
+  public void testGetPayment() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/payments")
+    .contentType(MediaType.APPLICATION_JSON)
+    .content(testJsonPaymentDto))
+    .andExpect(MockMvcResultMatchers.status().isOk());
+
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/payments/1234567"))
+      .andExpect(MockMvcResultMatchers.status().isOk())
+      .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+      .andReturn();
+  }
+  
+  @Test
+  public void testGetPaymentNotFound() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/payments/1234567"))
+      .andExpect(MockMvcResultMatchers.status().isNotFound());
+  }
+    
   @Test
   public void testAddPayment() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/payments")
