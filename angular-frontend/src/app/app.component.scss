@@ -1,0 +1,52 @@
+$spgNameSpace: 'spg' !default;
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  font-family: "SF Pro Text", "Myriad Set Pro", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  font-weight: normal;
+  padding: 0 1rem;
+  letter-spacing: normal;
+  line-height: 25px;
+}
+
+.#{$spgNameSpace}-title {
+  color: darkgreen;
+}
+
+.#{$spgNameSpace}-search {
+  margin-left: 0.5rem;
+  color: gray;
+}
+.icon-1dot5x {
+  transform: scale(1.5);
+}
+
+.#{$spgNameSpace}-lang {
+  display: flex;
+  flex-direction: row;
+  border-left: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  padding: 0 0.5rem;
+  align-items: center;
+  max-height: 1.25rem;
+}
+.#{$spgNameSpace}-lang-selector {
+  font-size: 12px;
+  font-weight: 200;
+  text-decoration: none;
+}
+.#{$spgNameSpace}-lang-spacer {
+  margin: 0 0.5rem;
+}
