@@ -6,10 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Embeddable;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.iiplabs.spg.web.utils.serializers.AllMaskSerializer;
 import com.iiplabs.spg.web.utils.serializers.PanMaskSerializer;
 
+import com.iiplabs.spg.web.views.Views;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -25,12 +27,14 @@ import lombok.ToString;
 @Embeddable
 public class Card implements Serializable {
 
+	@JsonView(Views.Public.class)
 	@JsonSerialize(using=PanMaskSerializer.class)
 	@EqualsAndHashCode.Include
 	@Convert(converter=EncryptedContentConverter.class)
 	@Column(name="pan")
 	private String pan;
 
+	@JsonView(Views.Public.class)
 	@JsonSerialize(using=AllMaskSerializer.class)
 	@EqualsAndHashCode.Include
 	@Convert(converter=EncryptedContentConverter.class)
