@@ -1,0 +1,1 @@
+/* ALTER TABLE `test_table` ADD INDEX `long_column_idx` (long_column); */

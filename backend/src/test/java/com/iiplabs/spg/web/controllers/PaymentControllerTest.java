@@ -32,7 +32,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 public class PaymentControllerTest {
 
   @Autowired
-	private MockMvc mockMvc;
+  private MockMvc mockMvc;
   
   @Mock
   private IPaymentService paymentService;
@@ -53,9 +53,9 @@ public class PaymentControllerTest {
   }
 
   @Test
-	public void contextLoads() {
+  public void contextLoads() {
     //
-	}
+  }
 
   @Test
   public void whenPaymentControllerInjected_thenNotNull() throws Exception {
