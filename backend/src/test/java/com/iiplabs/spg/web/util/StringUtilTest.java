@@ -37,4 +37,10 @@ public class StringUtilTest {
 		 assertEquals("************6238", StringUtil.maskString(source, 0, 12, '*'));
 	}
 
+	@Test
+	public void testSplitString() {
+		String source = "AAA/BBB";
+		assertEquals(2, source.split("/").length);
+	}
+
 }
