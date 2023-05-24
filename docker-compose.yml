@@ -21,6 +21,8 @@ services:
   backend:
     build:
       context: ./backend/
+      args:
+        PROFILE_NAME: ${JAVA_CORE_BUILD_PROFILE}
     image: spg-backend:latest
     container_name: spg-backend
     restart: always
