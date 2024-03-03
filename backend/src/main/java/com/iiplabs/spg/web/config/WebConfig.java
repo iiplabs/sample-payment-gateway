@@ -14,19 +14,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/api/**")
-			.allowedOrigins("http://spg-frontend:5000")
-			.allowedMethods("GET", "POST", "PUT", "HEAD", "DELETE", "OPTIONS")
-			.allowedHeaders("*")
-			.allowCredentials(true);
-	}
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedOrigins("http://spg-frontend:5000")
+                .allowedMethods("GET", "POST", "PUT", "HEAD", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true);
+    }
 
-	@Override
-	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-		ObjectMapper mapper = Jackson2ObjectMapperBuilder.json().defaultViewInclusion(true).build();
-		converters.add(new MappingJackson2HttpMessageConverter(mapper));
-	}
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        ObjectMapper mapper = Jackson2ObjectMapperBuilder.json().defaultViewInclusion(true).build();
+        converters.add(new MappingJackson2HttpMessageConverter(mapper));
+    }
 
 }

@@ -15,12 +15,12 @@ import org.springframework.test.context.ContextConfiguration;
 @DataJpaTest
 public class JpaTest {
 
-	@Autowired
-	private IPaymentRepository paymentRepository;
+    @Autowired
+    private IPaymentRepository paymentRepository;
 
-	@Test
-	void injectedComponents() {
-		assertThat(paymentRepository).isNotNull();
-	}
-	
+    @Test
+    void injectedComponents() {
+        assertThat(paymentRepository).isNotNull();
+    }
+
 }

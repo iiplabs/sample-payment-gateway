@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 
 public class DateTimeUtilTest {
 
-  @Test
-	public void testDateTimeFormatter() {
-			LocalDateTime localDateTime = LocalDateTime.of(2021, 7, 7, 13, 30, 45).plus(861, ChronoUnit.MILLIS);
-			String dateString = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(localDateTime);
-			System.out.println(dateString);
-			assertEquals("2021-07-07T13:30:45.861Z", dateString);
-	}
+    @Test
+    public void testDateTimeFormatter() {
+        LocalDateTime localDateTime = LocalDateTime.of(2021, 7, 7, 13, 30, 45).plus(861, ChronoUnit.MILLIS);
+        String dateString = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(localDateTime);
+        System.out.println(dateString);
+        assertEquals("2021-07-07T13:30:45.861Z", dateString);
+    }
 
 }

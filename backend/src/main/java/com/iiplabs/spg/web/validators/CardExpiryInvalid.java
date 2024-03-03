@@ -16,16 +16,16 @@ import java.lang.annotation.Target;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-import com.iiplabs.spg.web.validators.Currency.List;
+import com.iiplabs.spg.web.validators.CardExpiryInvalid.List;
 
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
 @Documented
 @Repeatable(List.class)
-@Constraint(validatedBy = CurrencyValidator.class)
-public @interface Currency {
+@Constraint(validatedBy = CardExpiryInvalidValidator.class)
+public @interface CardExpiryInvalid {
 
-    String message() default "{validation.invalid_currency}";
+    String message() default "{validation.invalid_expiry}";
 
     Class<?>[] groups() default {};
 
@@ -35,8 +35,7 @@ public @interface Currency {
     @Retention(RUNTIME)
     @Documented
     public @interface List {
-        Currency[] value();
+        CardExpiryInvalid[] value();
     }
 
 }
-

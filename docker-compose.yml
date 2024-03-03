@@ -3,9 +3,9 @@ version: '3.9'
 services:
   mysql:
     container_name: spg-db
-    image: mysql/mysql-server:8.0.32
+    image: mysql:8.0.36
     command: --default-authentication-plugin=mysql_native_password --lower_case_table_names=1
-    restart: always
+    restart: unless-stopped
     volumes:
       - db-data:/var/lib/mysql
       - ./docker/db/scripts/backend:/docker-entrypoint-initdb.d
@@ -25,7 +25,7 @@ services:
         PROFILE_NAME: ${JAVA_CORE_BUILD_PROFILE}
     image: spg-backend:latest
     container_name: spg-backend
-    restart: always
+    restart: unless-stopped
     ports:
       - '${BE_SERVER_PORT}:${BE_SERVER_PORT}'
     volumes:

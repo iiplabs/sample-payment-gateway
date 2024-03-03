@@ -5,49 +5,49 @@ import org.apache.commons.lang3.StringUtils;
 
 public final class StringUtil {
 
-	public static String getLastField(String path) {
-		String[] a = path.split("\\.");
-		return a[a.length - 1];
-	}
-	
-	public static String fromBase64(String base64) throws IllegalArgumentException {
-		return new String(Base64.decodeBase64(base64.getBytes()));
-	}
+    public static String getLastField(String path) {
+        String[] a = path.split("\\.");
+        return a[a.length - 1];
+    }
 
-	public static String toBase64(String v) {
-		return new String(Base64.encodeBase64(v.getBytes()));
-	}
+    public static String fromBase64(String base64) throws IllegalArgumentException {
+        return new String(Base64.decodeBase64(base64.getBytes()));
+    }
 
-	public static String maskString(String source, int start, int end, char maskChar) {
-		if (source == null || source.equals("")) {
-			return "";
-		}
+    public static String toBase64(String v) {
+        return new String(Base64.encodeBase64(v.getBytes()));
+    }
 
-		if (start < 0) {
-			start = 0;
-		}
+    public static String maskString(String source, int start, int end, char maskChar) {
+        if (source == null || source.equals("")) {
+            return "";
+        }
 
-		if (end > source.length()) {
-			end = source.length();
-		}
-		
-		if (start > end) {
-			throw new IllegalArgumentException("End index greater than start index");
-		}
+        if (start < 0) {
+            start = 0;
+        }
 
-		int maskLength = end - start;
+        if (end > source.length()) {
+            end = source.length();
+        }
 
-		if (maskLength == 0) {
-			return source;
-		}
+        if (start > end) {
+            throw new IllegalArgumentException("End index greater than start index");
+        }
 
-		String strMaskString = StringUtils.repeat(maskChar, maskLength);
+        int maskLength = end - start;
 
-		return StringUtils.overlay(source, strMaskString, start, end);
-	}
+        if (maskLength == 0) {
+            return source;
+        }
 
-	private StringUtil() {
-		throw new AssertionError();
-	}
+        String strMaskString = StringUtils.repeat(maskChar, maskLength);
+
+        return StringUtils.overlay(source, strMaskString, start, end);
+    }
+
+    private StringUtil() {
+        throw new AssertionError();
+    }
 
 }

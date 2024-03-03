@@ -7,8 +7,8 @@ import com.iiplabs.spg.web.model.dto.PaymentDto;
 
 public interface IPaymentService {
 
-	Collection<Payment> findByInvoice(String invoice);
-	
-	Payment addPayment(PaymentDto payment);
+    Collection<Payment> findByInvoice(String invoice);
+
+    Payment addPayment(PaymentDto payment);
 
 }

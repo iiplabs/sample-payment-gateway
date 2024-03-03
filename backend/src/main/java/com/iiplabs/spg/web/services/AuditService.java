@@ -17,26 +17,26 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class AuditService implements IAuditService {
 
-  @Transactional
-  @Override
-  public void writeToAudit(Collection<Payment> transactions) {
-    transactions.stream().forEach(t -> {
-      String serializedOutput = null;
-      try {
-        serializedOutput = MAPPER.writeValueAsString(t);
-      } catch (JsonProcessingException e) {
-        log.error(e, e);
-      }
-      if (serializedOutput != null) {
-        auditLogger.info(serializedOutput);
-      } else {
-        auditLogger.info("{'error' : 'problem serializing invoice " + t.getInvoice() + "'}");
-      }
-    });
-  }
-  
-  private static final ObjectMapper MAPPER = new ObjectMapper();
-  
-  private static final Logger auditLogger = LogManager.getLogger("AuditLogger");
-  
+    @Transactional
+    @Override
+    public void writeToAudit(Collection<Payment> transactions) {
+        transactions.stream().forEach(t -> {
+            String serializedOutput = null;
+            try {
+                serializedOutput = MAPPER.writeValueAsString(t);
+            } catch (JsonProcessingException e) {
+                log.error(e, e);
+            }
+            if (serializedOutput != null) {
+                auditLogger.info(serializedOutput);
+            } else {
+                auditLogger.info("{'error' : 'problem serializing invoice " + t.getInvoice() + "'}");
+            }
+        });
+    }
+
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    private static final Logger auditLogger = LogManager.getLogger("AuditLogger");
+
 }

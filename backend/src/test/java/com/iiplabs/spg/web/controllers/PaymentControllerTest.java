@@ -30,109 +30,132 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc
 public class PaymentControllerTest {
 
-  @Autowired
-  private MockMvc mockMvc;
-  
-  @Mock
-  private IPaymentService paymentService;
-  
-  @Autowired
-  private PaymentController paymentController;
+    @Autowired
+    private MockMvc mockMvc;
 
-  @Autowired
-  private ObjectMapper objectMapper;
+    @Mock
+    private IPaymentService paymentService;
 
-  final private String testJsonPaymentDto = "{\"invoice\":\"1234567\",\"amount\":\"1299\",\"currency\":\"EUR\",\"card\":{\"pan\":\"4024007197526238\",\"expiry\":\"0624\",\"cvv\":\"789\"},\"cardholder\":{\"name\":\"First Last\",\"email\":\"test@domain.com\"}}";
-  final private String testJsonPaymentDtoBadRequest = "{\"invoice\":\"1234567}";
-  final private String testJsonPaymentDtoEmptyInvoice = "{\"invoice\":\"\",\"amount\":\"1299\",\"currency\":\"EUR\",\"card\":{\"pan\":\"4024007197526238\",\"expiry\":\"0624\",\"cvv\":\"789\"},\"cardholder\":{\"name\":\"First Last\",\"email\":\"test@domain.com\"}}";
+    @Autowired
+    private PaymentController paymentController;
 
-  @BeforeAll
-  public static void setup() {
-    //
-  }
+    @Autowired
+    private ObjectMapper objectMapper;
 
-  @Test
-  public void contextLoads() {
-    //
-  }
+    final private String testJsonPaymentDto = "{\"invoice\":\"1234567\",\"amount\":\"1299\",\"currency\":\"EUR\",\"card\":{\"pan\":\"4024007197526238\",\"expiry\":\"0624\",\"cvv\":\"789\"},\"cardholder\":{\"name\":\"First Last\",\"email\":\"test@domain.com\"}}";
+    final private String testJsonPaymentDtoBadRequest = "{\"invoice\":\"1234567}";
+    final private String testJsonPaymentDtoEmptyInvoice = "{\"invoice\":\"\",\"amount\":\"1299\",\"currency\":\"EUR\",\"card\":{\"pan\":\"4024007197526238\",\"expiry\":\"0624\",\"cvv\":\"789\"},\"cardholder\":{\"name\":\"First Last\",\"email\":\"test@domain.com\"}}";
+    final private String testJsonPaymentDtoCardExpired = "{\"invoice\":\"1234567\",\"amount\":\"1299\",\"currency\":\"EUR\",\"card\":{\"pan\":\"4024007197526238\",\"expiry\":\"0110\",\"cvv\":\"789\"},\"cardholder\":{\"name\":\"First Last\",\"email\":\"test@domain.com\"}}";
+    final private String testJsonPaymentDtoCardInvalidExpiry = "{\"invoice\":\"1234567\",\"amount\":\"1299\",\"currency\":\"EUR\",\"card\":{\"pan\":\"4024007197526238\",\"expiry\":\"0024\",\"cvv\":\"789\"},\"cardholder\":{\"name\":\"First Last\",\"email\":\"test@domain.com\"}}";
 
-  @Test
-  public void whenPaymentControllerInjected_thenNotNull() throws Exception {
-    assertThat(paymentController).isNotNull();
-  }
+    @BeforeAll
+    public static void setup() {
+        //
+    }
 
-  @Test
-  public void testGetPayment() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/payments")
-    .contentType(MediaType.APPLICATION_JSON)
-    .content(testJsonPaymentDto))
-    .andExpect(MockMvcResultMatchers.status().isOk());
+    @Test
+    void contextLoads() {
+        //
+    }
 
-    mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/payments/1234567"))
-      .andExpect(MockMvcResultMatchers.status().isOk())
-      .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-      .andReturn();
-  }
-  
-  @Test
-  public void testGetPaymentNotFound() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/payments/1234567"))
-      .andExpect(MockMvcResultMatchers.status().isNotFound());
-  }
-    
-  @Test
-  public void testAddPayment() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/payments")
-      .contentType(MediaType.APPLICATION_JSON)
-      .content(testJsonPaymentDto))
-      .andExpect(MockMvcResultMatchers.status().isOk());
-  }
+    @Test
+    void whenPaymentControllerInjected_thenNotNull() throws Exception {
+        assertThat(paymentController).isNotNull();
+    }
 
-  @Test
-  public void testAddPaymentMalformed() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/payments")
-      .contentType(MediaType.APPLICATION_JSON)
-      .content(testJsonPaymentDtoBadRequest))
-      .andExpect(MockMvcResultMatchers.status().isBadRequest());
-  }
+    @Test
+    void testGetPayment() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/payments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testJsonPaymentDto))
+                .andExpect(MockMvcResultMatchers.status().isOk());
 
-  @Test
-  public void testAddPaymentWrongInput() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/payments")
-      .contentType(MediaType.APPLICATION_JSON)
-      .content(testJsonPaymentDtoEmptyInvoice))
-      .andExpect(MockMvcResultMatchers.status().isBadRequest());
-  }
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/payments/1234567"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+    }
 
-  @Test
-  public void serializationTest() throws IOException {
-    PaymentDto paymentDto = objectMapper.readValue(testJsonPaymentDto, PaymentDto.class);
-    final String serializedPaymentDtoAsJson = objectMapper.writeValueAsString(paymentDto);
-    assertEquals(serializedPaymentDtoAsJson, testJsonPaymentDto);
-  }
+    @Test
+    void testGetPaymentNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/payments/1234567"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 
-  @Test
-  public void deserializationTest() throws IOException {
-    PaymentDto deserializedPaymentDto = objectMapper.readValue(testJsonPaymentDto, PaymentDto.class);
-    PaymentDto paymentDto = getMockPaymentDto();
-    assertEquals(deserializedPaymentDto, paymentDto);
-  }
+    @Test
+    void testAddPayment() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/payments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testJsonPaymentDto))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
 
-  private static PaymentDto getMockPaymentDto() {
-    PaymentDto paymentDto = new PaymentDto();
-    paymentDto.setAmount("1299");
-    CardDto card = new CardDto();
-    card.setCvv("789");
-    card.setExpiry("0624");
-    card.setPan("4024007197526238");
-    paymentDto.setCard(card);
-    CardHolderDto cardHolder = new CardHolderDto();
-    cardHolder.setEmail("test@domain.com");
-    cardHolder.setName("First Last");
-    paymentDto.setCardHolder(cardHolder);
-    paymentDto.setCurrency("EUR");
-    paymentDto.setInvoice("1234567");
-    return paymentDto;
-  }
+    @Test
+    void testAddPaymentMalformed() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/payments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testJsonPaymentDtoBadRequest))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    void testAddPaymentWrongInput() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/payments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testJsonPaymentDtoEmptyInvoice))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    void testAddPaymentCardExpired() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/payments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testJsonPaymentDtoCardExpired))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.approved").value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errors.expiry").value("Payment card is expired."));
+    }
+
+    @Test
+    void testAddPaymentCardInvalidExpiry() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/payments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testJsonPaymentDtoCardInvalidExpiry))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.approved").value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errors.expiry").value("Invalid expiry date."));
+
+    }
+
+    @Test
+    void serializationTest() throws IOException {
+        PaymentDto paymentDto = objectMapper.readValue(testJsonPaymentDto, PaymentDto.class);
+        final String serializedPaymentDtoAsJson = objectMapper.writeValueAsString(paymentDto);
+        assertEquals(serializedPaymentDtoAsJson, testJsonPaymentDto);
+    }
+
+    @Test
+    void deserializationTest() throws IOException {
+        PaymentDto deserializedPaymentDto = objectMapper.readValue(testJsonPaymentDto, PaymentDto.class);
+        PaymentDto paymentDto = getMockPaymentDto();
+        assertEquals(deserializedPaymentDto, paymentDto);
+    }
+
+    private static PaymentDto getMockPaymentDto() {
+        PaymentDto paymentDto = new PaymentDto();
+        paymentDto.setAmount("1299");
+        CardDto card = new CardDto();
+        card.setCvv("789");
+        card.setExpiry("0624");
+        card.setPan("4024007197526238");
+        paymentDto.setCard(card);
+        CardHolderDto cardHolder = new CardHolderDto();
+        cardHolder.setEmail("test@domain.com");
+        cardHolder.setName("First Last");
+        paymentDto.setCardHolder(cardHolder);
+        paymentDto.setCurrency("EUR");
+        paymentDto.setInvoice("1234567");
+        return paymentDto;
+    }
 
 }

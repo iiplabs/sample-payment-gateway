@@ -16,16 +16,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice(annotations = { RestControllerAnnotation.class })
+@RestControllerAdvice(annotations = {RestControllerAnnotation.class})
 public class CustomValidationExceptionHandler {
 
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public final HttpEntity<TransactionResponseDto> handleValidationExceptions(MethodArgumentNotValidException ex) {
-		Map<String, String> errors = ex.getBindingResult().getAllErrors().stream()
-			.collect(Collectors.toMap(error -> StringUtil.getLastField(((FieldError) error).getField()), 
-																	ObjectError::getDefaultMessage));
-		return new HttpEntity<>(new TransactionResponseDto(errors));
-	}
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public final HttpEntity<TransactionResponseDto> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = ex.getBindingResult().getAllErrors().stream()
+                .collect(Collectors.toMap(error -> StringUtil.getLastField(((FieldError) error).getField()),
+                        ObjectError::getDefaultMessage));
+        return new HttpEntity<>(new TransactionResponseDto(errors));
+    }
 
 }

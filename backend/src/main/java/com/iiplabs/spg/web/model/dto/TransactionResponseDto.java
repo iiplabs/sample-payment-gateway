@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class TransactionResponseDto {
-  
+
     Map<String, String> errors;
-    
+
     public boolean isApproved() {
         return errors == null || errors.isEmpty();
     }

@@ -7,5 +7,5 @@ import com.iiplabs.spg.web.model.Payment;
 public interface IAuditService {
 
     void writeToAudit(Collection<Payment> transactions);
-     
+
 }

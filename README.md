@@ -25,10 +25,35 @@ docker compose up -d
 docker compose down
 ```
 
+### Rebuild an individual service
+
+```bash
+docker compose build backend
+```
+
+### Check the latest build date of a service
+
+```bash
+docker inspect -f '{{.Created}}' backend
+```
+
+### Redeploy an individual service
+
+```bash
+docker compose up --no-deps -d backend
+```
+
 ### Connect to logs of Spring Boot backend
 
 ```bash
-docker logs --tail 50 --follow --timestamps spg-backend
+docker logs --tail 50 --follow --timestamps backend
+```
+
+### push to Docker Hub
+
+```bash
+docker tag spg-backend iiplabs/spg-backend:0.0.1
+docker push iiplabs/spg-backend:0.0.1
 ```
 
 ## Testing

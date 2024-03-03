@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface IPaymentRepository extends JpaRepository<Payment, Long>, JpaSpecificationExecutor<Payment> {
 
-	@Transactional(readOnly=true)
-	Collection<Payment> findByInvoice(String invoice);
-	
+    @Transactional(readOnly = true)
+    Collection<Payment> findByInvoice(String invoice);
+
 }
