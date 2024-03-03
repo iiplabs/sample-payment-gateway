@@ -23,7 +23,7 @@ public class CardExpiredValidator implements ConstraintValidator<CardExpired, St
             return true;
         }
 
-        YearMonth expiredDate = null;
+        YearMonth expiredDate;
         try {
             expiredDate = CreditCardUtil.getYearMonthFromExpiry(cardExpired);
         } catch (Exception e) {

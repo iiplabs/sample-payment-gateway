@@ -19,7 +19,7 @@ public final class StringUtil {
     }
 
     public static String maskString(String source, int start, int end, char maskChar) {
-        if (source == null || source.equals("")) {
+        if (source == null || source.isBlank()) {
             return "";
         }
 

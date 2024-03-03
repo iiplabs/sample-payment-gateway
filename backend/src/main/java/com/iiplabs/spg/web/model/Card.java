@@ -23,7 +23,6 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@SuppressWarnings("serial")
 @Embeddable
 public class Card implements Serializable {
 
