@@ -21,6 +21,7 @@ services:
   backend:
     build:
       context: ./backend/
+      dockerfile: Dockerfile
       args:
         PROFILE_NAME: ${JAVA_CORE_BUILD_PROFILE}
     image: spg-backend:latest
