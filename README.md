@@ -11,6 +11,26 @@ Sample Payment Gateway is an app that accepts credit card payments for processin
 
 3. Install Docker.
 
+## Environment variables
+
+Below is the list of recommended content for your local .env file.
+
+AUDIT_JSON=/tmp/audit.json
+SQL_DATABASE=spg
+SQL_USER=spg
+SQL_PASSWORD=1234567890
+SQL_ROOT_PASSWORD=1234567890
+MYSQL_PORT=3306
+BE_SERVER_PORT=9091
+BE_DB_URL=jdbc:mysql://spg-db:3306/spg?serverTimezone=UTC&useSSL=false
+BE_DB_USER=spg
+BE_DB_PASSWORD=1234567890
+
+BUILD_PROFILE=development
+
+FE_SERVER_PORT=8082
+NEXT_PUBLIC_API_URI=<http://spg-backend:$BE_SERVER_PORT/api/v1>
+
 ## Docker
 
 ### Start the system
