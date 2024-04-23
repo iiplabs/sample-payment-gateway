@@ -89,7 +89,7 @@ curl -d @test.json -H "Content-Type: application/json" http://localhost:9091/api
 Example:
 {
   "invoice": "1234567",
-  "amount": 1299,
+  "amount": "1299",
   "currency": "EUR",
   "cardholder": {
     "name": "First Last",
