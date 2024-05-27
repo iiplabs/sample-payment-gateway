@@ -22,220 +22,247 @@ class TransactionUtilTest {
 
     @Test
     void testDeclinedInvoice() {
-        PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
-
         // invoice isn't set
-        paymentDto.setInvoice(null);
+        PaymentDto paymentDto = TransactionUtilTest.getDeclinedInvoice(null);
         TransactionResponseDto response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // empty
-        paymentDto.setInvoice("");
+        paymentDto = TransactionUtilTest.getDeclinedInvoice("");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // > 50 symbols in length
-        paymentDto.setInvoice("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        paymentDto = TransactionUtilTest.getDeclinedInvoice("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
     }
 
     @Test
     void testDeclinedAmount() {
-        PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
-
         // not set
-        paymentDto.setAmount(null);
+        PaymentDto paymentDto = TransactionUtilTest.getDeclinedAmount(null);
         TransactionResponseDto response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // decimal amount
-        paymentDto.setAmount("1299.00");
+        paymentDto = TransactionUtilTest.getDeclinedAmount("1299.00");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // empty
-        paymentDto.setAmount("");
+        paymentDto = TransactionUtilTest.getDeclinedAmount("");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // not valid
-        paymentDto.setAmount("a 1299");
+        paymentDto = TransactionUtilTest.getDeclinedAmount("a 1299");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // 0
-        paymentDto.setAmount("0");
+        paymentDto = TransactionUtilTest.getDeclinedAmount("0");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // negative
-        paymentDto.setAmount("-1299");
+        paymentDto = TransactionUtilTest.getDeclinedAmount("-1299");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // leading 000
-        paymentDto.setAmount("01299");
+        paymentDto = TransactionUtilTest.getDeclinedAmount("01299");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertTrue(response.isApproved());
     }
 
     @Test
     void testDeclinedCurrency() {
-        PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
-
         // not set
-        paymentDto.setCurrency(null);
+        PaymentDto paymentDto = TransactionUtilTest.getDeclinedCurrency(null);
         TransactionResponseDto response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // empty
-        paymentDto.setCurrency("");
+        paymentDto = TransactionUtilTest.getDeclinedCurrency("");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // not in the approved list
-        paymentDto.setCurrency("EUR123");
+        paymentDto = TransactionUtilTest.getDeclinedCurrency("EUR123");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
     }
 
     @Test
     void testDeclinedCardholderName() {
-        PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
-
-        // CardholderName isn't set
-        paymentDto.getCardHolder().setName(null);
+        // CardholderName isn't set        
+        PaymentDto paymentDto = TransactionUtilTest.getDeclinedCardholderName(null);
         TransactionResponseDto response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // empty
-        paymentDto.getCardHolder().setName("");
+        paymentDto = TransactionUtilTest.getDeclinedCardholderName("");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // > 50 symbols in length
-        paymentDto.getCardHolder().setName("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        paymentDto = TransactionUtilTest.getDeclinedCardholderName("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
     }
 
     @Test
     void testDeclinedEmail() {
-        PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
-
         // Email isn't set
-        paymentDto.getCardHolder().setEmail(null);
+        PaymentDto paymentDto = TransactionUtilTest.getDeclinedEmail(null);
         TransactionResponseDto response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // empty
-        paymentDto.getCardHolder().setEmail("");
+        paymentDto = TransactionUtilTest.getDeclinedEmail("");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // invalid email
-        paymentDto.getCardHolder().setEmail("testdomain.com");
+        paymentDto = TransactionUtilTest.getDeclinedEmail("testdomain.com");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
         // invalid email
-        paymentDto.getCardHolder().setEmail("@testdomain.com");
+        paymentDto = TransactionUtilTest.getDeclinedEmail("@testdomain.com");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
     }
 
     @Test
     void testDeclinedPan() {
-        PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
-
         // PAN isn't set
-        paymentDto.getCard().setPan(null);
+        PaymentDto paymentDto = TransactionUtilTest.getDeclinedPan(null);
         TransactionResponseDto response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // empty
-        paymentDto.getCard().setPan("");
+        paymentDto = TransactionUtilTest.getDeclinedPan("");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // PAN shorter than 16 digits
-        paymentDto.getCard().setPan("402400719752623");
+        paymentDto = TransactionUtilTest.getDeclinedPan("402400719752623");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // alpha
-        paymentDto.getCard().setPan("a402400719752623");
+        paymentDto = TransactionUtilTest.getDeclinedPan("a402400719752623");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
     }
 
     @Test
     void testDeclinedCardExpired() {
-        PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
-
         // Expiry isn't set
-        paymentDto.getCard().setExpiry(null);
+        PaymentDto paymentDto = TransactionUtilTest.getDeclinedCardExpired(null);
         TransactionResponseDto response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // invalid date
-        paymentDto.getCard().setExpiry("");
+        paymentDto = TransactionUtilTest.getDeclinedCardExpired("");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // invalid date
-        paymentDto.getCard().setExpiry("132");
+        paymentDto = TransactionUtilTest.getDeclinedCardExpired("132");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // invalid date
-        paymentDto.getCard().setExpiry("1325");
+        paymentDto = TransactionUtilTest.getDeclinedCardExpired("1325");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // expired date - April 2021
-        paymentDto.getCard().setExpiry("0421");
+        paymentDto = TransactionUtilTest.getDeclinedCardExpired("0421");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
     }
 
     @Test
     void testDeclinedCvv() {
-        PaymentDto paymentDto = TransactionUtilTest.getGoodTest();
         // CVV isn't set
-        paymentDto.getCard().setCvv(null);
+        PaymentDto paymentDto = TransactionUtilTest.getDeclinedCvv(null);
         TransactionResponseDto response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // invalid CVV
-        paymentDto.getCard().setCvv("");
+        paymentDto = TransactionUtilTest.getDeclinedCvv("");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
 
         // invalid CVV
-        paymentDto.getCard().setCvv("1234");
+        paymentDto = TransactionUtilTest.getDeclinedCvv("1234");
         response = TransactionUtil.validateTransaction(paymentDto);
         assertFalse(response.isApproved());
     }
 
     private static PaymentDto getGoodTest() {
-        PaymentDto paymentDto = new PaymentDto();
-        paymentDto.setAmount("1299");
+        CardDto card = new CardDto("4024007197526238", "0624", "789");
+        CardHolderDto cardHolder = new CardHolderDto("First Last", "test@domain.com");
+        PaymentDto paymentDto = new PaymentDto("1234567", "1299", "EUR", cardHolder, card);
+        return paymentDto;
+    }
 
-        CardDto cardDto = new CardDto();
-        cardDto.setCvv("789");
-        cardDto.setExpiry("0624");
-        cardDto.setPan("4024007197526238");
-        paymentDto.setCard(cardDto);
+    private static PaymentDto getDeclinedAmount(String amount) {
+        CardDto card = new CardDto("4024007197526238", "0624", "789");
+        CardHolderDto cardHolder = new CardHolderDto("First Last", "test@domain.com");
+        PaymentDto paymentDto = new PaymentDto("1234567", amount, "EUR", cardHolder, card);
+        return paymentDto;
+    }
 
-        CardHolderDto cardHolderDto = new CardHolderDto();
-        cardHolderDto.setEmail("email@domain.com");
-        cardHolderDto.setName("First Last");
-        paymentDto.setCardHolder(cardHolderDto);
+    private static PaymentDto getDeclinedInvoice(String invoice) {
+        CardDto card = new CardDto("4024007197526238", "0624", "789");
+        CardHolderDto cardHolder = new CardHolderDto("First Last", "test@domain.com");
+        PaymentDto paymentDto = new PaymentDto(invoice, "1299", "EUR", cardHolder, card);
+        return paymentDto;
+    }
 
-        paymentDto.setCurrency("EUR");
-        paymentDto.setInvoice("1234567");
+    private static PaymentDto getDeclinedCurrency(String currency) {
+        CardDto card = new CardDto("4024007197526238", "0624", "789");
+        CardHolderDto cardHolder = new CardHolderDto("First Last", "test@domain.com");
+        PaymentDto paymentDto = new PaymentDto("1234567", "1299", currency, cardHolder, card);
+        return paymentDto;
+    }
 
+    private static PaymentDto getDeclinedCardholderName(String cardholderName) {
+        CardDto card = new CardDto("4024007197526238", "0624", "789");
+        CardHolderDto cardHolder = new CardHolderDto(cardholderName, "test@domain.com");
+        PaymentDto paymentDto = new PaymentDto("1234567", "1299", "EUR", cardHolder, card);
+        return paymentDto;
+    }
+
+    private static PaymentDto getDeclinedCvv(String cvv) {
+        CardDto card = new CardDto("4024007197526238", "0624", cvv);
+        CardHolderDto cardHolder = new CardHolderDto("First Last", "test@domain.com");
+        PaymentDto paymentDto = new PaymentDto("1234567", "1299", "EUR", cardHolder, card);
+        return paymentDto;
+    }
+
+    private static PaymentDto getDeclinedCardExpired(String expiry) {
+        CardDto card = new CardDto("4024007197526238", expiry, "789");
+        CardHolderDto cardHolder = new CardHolderDto("First Last", "test@domain.com");
+        PaymentDto paymentDto = new PaymentDto("1234567", "1299", "EUR", cardHolder, card);
+        return paymentDto;
+    }
+
+    private static PaymentDto getDeclinedEmail(String email) {
+        CardDto card = new CardDto("4024007197526238", "0624", "789");
+        CardHolderDto cardHolder = new CardHolderDto("First Last", email);
+        PaymentDto paymentDto = new PaymentDto("1234567", "1299", "EUR", cardHolder, card);
+        return paymentDto;
+    }
+
+    private static PaymentDto getDeclinedPan(String pan) {
+        CardDto card = new CardDto(pan, "0624", "789");
+        CardHolderDto cardHolder = new CardHolderDto("First Last", "test@domain.com");
+        PaymentDto paymentDto = new PaymentDto("1234567", "1299", "EUR", cardHolder, card);
         return paymentDto;
     }
 

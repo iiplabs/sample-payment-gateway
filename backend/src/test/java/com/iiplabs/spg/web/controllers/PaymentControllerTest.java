@@ -142,19 +142,9 @@ public class PaymentControllerTest {
     }
 
     private static PaymentDto getMockPaymentDto() {
-        PaymentDto paymentDto = new PaymentDto();
-        paymentDto.setAmount("1299");
-        CardDto card = new CardDto();
-        card.setCvv("789");
-        card.setExpiry("0624");
-        card.setPan("4024007197526238");
-        paymentDto.setCard(card);
-        CardHolderDto cardHolder = new CardHolderDto();
-        cardHolder.setEmail("test@domain.com");
-        cardHolder.setName("First Last");
-        paymentDto.setCardHolder(cardHolder);
-        paymentDto.setCurrency("EUR");
-        paymentDto.setInvoice("1234567");
+        CardDto card = new CardDto("4024007197526238", "0624", "789");
+        CardHolderDto cardHolder = new CardHolderDto("First Last", "test@domain.com");
+        PaymentDto paymentDto = new PaymentDto("1234567", "1299", "EUR", cardHolder, card);
         return paymentDto;
     }
 

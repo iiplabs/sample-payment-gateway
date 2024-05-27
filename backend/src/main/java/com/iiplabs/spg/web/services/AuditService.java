@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-@Service
+@Service("auditService")
 public class AuditService implements IAuditService {
 
     @Transactional
