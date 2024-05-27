@@ -1,6 +1,7 @@
 package com.iiplabs.spg.web.controllers;
 
 import java.util.Collection;
+import java.util.HashMap;
 
 import jakarta.validation.Valid;
 
@@ -12,6 +13,7 @@ import com.iiplabs.spg.web.model.dto.TransactionResponseDto;
 import com.iiplabs.spg.web.services.IPaymentService;
 import com.iiplabs.spg.web.views.Views;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +30,7 @@ public class PaymentController {
 
     private IPaymentService paymentService;
 
-    public PaymentController(IPaymentService paymentService) {
+    public PaymentController(@Qualifier("paymentService") IPaymentService paymentService) {
         this.paymentService = paymentService;
     }
 
@@ -42,7 +44,7 @@ public class PaymentController {
     @PostMapping("/payments")
     public ResponseEntity<TransactionResponseDto> addPayment(@Valid @RequestBody PaymentDto paymentDto) {
         paymentService.addPayment(paymentDto);
-        return ResponseEntity.ok(new TransactionResponseDto());
+        return ResponseEntity.ok(new TransactionResponseDto(new HashMap<>()));
     }
 
 }

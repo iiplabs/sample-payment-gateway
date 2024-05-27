@@ -9,7 +9,7 @@
     </parent>
     <groupId>com.iiplabs.spg</groupId>
     <artifactId>spg-backend</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.4</version>
     <packaging>jar</packaging>
     <name>spg-backend</name>
     <description>API layer for SPG</description>
@@ -121,13 +121,13 @@
 
     <profiles>
         <profile>
-            <id>dev</id>
+            <id>development</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <build.profile.id>dev</build.profile.id>
-                <spring.profiles.active>dev</spring.profiles.active>
+                <build.profile.id>development</build.profile.id>
+                <spring.profiles.active>development</spring.profiles.active>
             </properties>
             <build>
                 <filters>
@@ -142,13 +142,13 @@
             </build>
         </profile>
         <profile>
-            <id>prod</id>
+            <id>production</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <build.profile.id>prod</build.profile.id>
-                <spring.profiles.active>prod</spring.profiles.active>
+                <build.profile.id>production</build.profile.id>
+                <spring.profiles.active>production</spring.profiles.active>
             </properties>
             <build>
                 <filters>
