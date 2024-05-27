@@ -9,24 +9,26 @@ import com.iiplabs.spg.web.model.Payment;
 import com.iiplabs.spg.web.model.dto.PaymentDto;
 import com.iiplabs.spg.web.reps.IPaymentRepository;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Service("paymentService")
 public class PaymentService implements IPaymentService {
 
-    private IPaymentRepository payments;
+    private IPaymentRepository paymentsRepository;
     private IAuditService auditService;
 
-    public PaymentService(IPaymentRepository payments, IAuditService auditService) {
-        this.payments = payments;
+    public PaymentService(@Qualifier("paymentsRepository") IPaymentRepository paymentsRepository, 
+                            @Qualifier("auditService") IAuditService auditService) {
+        this.paymentsRepository = paymentsRepository;
         this.auditService = auditService;
     }
 
     @Transactional(readOnly = true)
     @Override
     public Collection<Payment> findByInvoice(String invoice) {
-        return payments.findByInvoice(invoice);
+        return paymentsRepository.findByInvoice(invoice);
     }
 
     @Transactional
@@ -36,24 +38,24 @@ public class PaymentService implements IPaymentService {
         Payment payment = new Payment();
         payment.setAmount(paymentDto.getIntAmount());
 
-        if (paymentDto.getCard() != null) {
+        if (paymentDto.card() != null) {
             Card card = new Card();
-            card.setExpiry(paymentDto.getCard().getExpiry());
-            card.setPan(paymentDto.getCard().getPan());
+            card.setExpiry(paymentDto.card().expiry());
+            card.setPan(paymentDto.card().pan());
             payment.setCard(card);
         }
 
-        if (paymentDto.getCardHolder() != null) {
+        if (paymentDto.cardHolder() != null) {
             CardHolder cardHolder = new CardHolder();
-            cardHolder.setEmail(paymentDto.getCardHolder().getEmail());
-            cardHolder.setName(paymentDto.getCardHolder().getName());
+            cardHolder.setEmail(paymentDto.cardHolder().email());
+            cardHolder.setName(paymentDto.cardHolder().name());
             payment.setCardHolder(cardHolder);
         }
 
-        payment.setCurrency(paymentDto.getCurrency());
-        payment.setInvoice(paymentDto.getInvoice());
+        payment.setCurrency(paymentDto.currency());
+        payment.setInvoice(paymentDto.invoice());
 
-        payments.save(payment);
+        paymentsRepository.save(payment);
 
         // save audit trail
         // part of the same transaction,

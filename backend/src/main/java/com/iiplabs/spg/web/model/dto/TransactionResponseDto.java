@@ -4,17 +4,9 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class TransactionResponseDto {
-
-    Map<String, String> errors;
+public record TransactionResponseDto(
+        Map<String, String> errors) {
 
     public boolean isApproved() {
         return errors == null || errors.isEmpty();
