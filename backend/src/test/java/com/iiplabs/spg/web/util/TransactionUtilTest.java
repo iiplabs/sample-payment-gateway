@@ -204,42 +204,42 @@ class TransactionUtilTest {
     }
 
     private static PaymentDto getGoodTest() {
-        CardDto card = new CardDto("4024007197526238", "0624", "789");
+        CardDto card = new CardDto("4024007197526238", "0630", "789");
         CardHolderDto cardHolder = new CardHolderDto("First Last", "test@domain.com");
         PaymentDto paymentDto = new PaymentDto("1234567", "1299", "EUR", cardHolder, card);
         return paymentDto;
     }
 
     private static PaymentDto getDeclinedAmount(String amount) {
-        CardDto card = new CardDto("4024007197526238", "0624", "789");
+        CardDto card = new CardDto("4024007197526238", "0630", "789");
         CardHolderDto cardHolder = new CardHolderDto("First Last", "test@domain.com");
         PaymentDto paymentDto = new PaymentDto("1234567", amount, "EUR", cardHolder, card);
         return paymentDto;
     }
 
     private static PaymentDto getDeclinedInvoice(String invoice) {
-        CardDto card = new CardDto("4024007197526238", "0624", "789");
+        CardDto card = new CardDto("4024007197526238", "0630", "789");
         CardHolderDto cardHolder = new CardHolderDto("First Last", "test@domain.com");
         PaymentDto paymentDto = new PaymentDto(invoice, "1299", "EUR", cardHolder, card);
         return paymentDto;
     }
 
     private static PaymentDto getDeclinedCurrency(String currency) {
-        CardDto card = new CardDto("4024007197526238", "0624", "789");
+        CardDto card = new CardDto("4024007197526238", "0630", "789");
         CardHolderDto cardHolder = new CardHolderDto("First Last", "test@domain.com");
         PaymentDto paymentDto = new PaymentDto("1234567", "1299", currency, cardHolder, card);
         return paymentDto;
     }
 
     private static PaymentDto getDeclinedCardholderName(String cardholderName) {
-        CardDto card = new CardDto("4024007197526238", "0624", "789");
+        CardDto card = new CardDto("4024007197526238", "0630", "789");
         CardHolderDto cardHolder = new CardHolderDto(cardholderName, "test@domain.com");
         PaymentDto paymentDto = new PaymentDto("1234567", "1299", "EUR", cardHolder, card);
         return paymentDto;
     }
 
     private static PaymentDto getDeclinedCvv(String cvv) {
-        CardDto card = new CardDto("4024007197526238", "0624", cvv);
+        CardDto card = new CardDto("4024007197526238", "0630", cvv);
         CardHolderDto cardHolder = new CardHolderDto("First Last", "test@domain.com");
         PaymentDto paymentDto = new PaymentDto("1234567", "1299", "EUR", cardHolder, card);
         return paymentDto;
@@ -253,14 +253,14 @@ class TransactionUtilTest {
     }
 
     private static PaymentDto getDeclinedEmail(String email) {
-        CardDto card = new CardDto("4024007197526238", "0624", "789");
+        CardDto card = new CardDto("4024007197526238", "0630", "789");
         CardHolderDto cardHolder = new CardHolderDto("First Last", email);
         PaymentDto paymentDto = new PaymentDto("1234567", "1299", "EUR", cardHolder, card);
         return paymentDto;
     }
 
     private static PaymentDto getDeclinedPan(String pan) {
-        CardDto card = new CardDto(pan, "0624", "789");
+        CardDto card = new CardDto(pan, "0630", "789");
         CardHolderDto cardHolder = new CardHolderDto("First Last", "test@domain.com");
         PaymentDto paymentDto = new PaymentDto("1234567", "1299", "EUR", cardHolder, card);
         return paymentDto;
