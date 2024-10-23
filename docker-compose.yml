@@ -1,7 +1,7 @@
 services:
   mysql:
     container_name: spg-db
-    image: mysql:8.0.36
+    image: mysql:8.0.40
     command: --default-authentication-plugin=mysql_native_password --lower_case_table_names=1
     restart: unless-stopped
     volumes:

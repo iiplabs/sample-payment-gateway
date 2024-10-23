@@ -42,9 +42,9 @@ public class PaymentControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    final private String testJsonPaymentDto = "{\"invoice\":\"1234567\",\"amount\":\"1299\",\"currency\":\"EUR\",\"card\":{\"pan\":\"4024007197526238\",\"expiry\":\"0624\",\"cvv\":\"789\"},\"cardholder\":{\"name\":\"First Last\",\"email\":\"test@domain.com\"}}";
+    final private String testJsonPaymentDto = "{\"invoice\":\"1234567\",\"amount\":\"1299\",\"currency\":\"EUR\",\"card\":{\"pan\":\"4024007197526238\",\"expiry\":\"0630\",\"cvv\":\"789\"},\"cardholder\":{\"name\":\"First Last\",\"email\":\"test@domain.com\"}}";
     final private String testJsonPaymentDtoBadRequest = "{\"invoice\":\"1234567}";
-    final private String testJsonPaymentDtoEmptyInvoice = "{\"invoice\":\"\",\"amount\":\"1299\",\"currency\":\"EUR\",\"card\":{\"pan\":\"4024007197526238\",\"expiry\":\"0624\",\"cvv\":\"789\"},\"cardholder\":{\"name\":\"First Last\",\"email\":\"test@domain.com\"}}";
+    final private String testJsonPaymentDtoEmptyInvoice = "{\"invoice\":\"\",\"amount\":\"1299\",\"currency\":\"EUR\",\"card\":{\"pan\":\"4024007197526238\",\"expiry\":\"0630\",\"cvv\":\"789\"},\"cardholder\":{\"name\":\"First Last\",\"email\":\"test@domain.com\"}}";
     final private String testJsonPaymentDtoCardExpired = "{\"invoice\":\"1234567\",\"amount\":\"1299\",\"currency\":\"EUR\",\"card\":{\"pan\":\"4024007197526238\",\"expiry\":\"0110\",\"cvv\":\"789\"},\"cardholder\":{\"name\":\"First Last\",\"email\":\"test@domain.com\"}}";
     final private String testJsonPaymentDtoCardInvalidExpiry = "{\"invoice\":\"1234567\",\"amount\":\"1299\",\"currency\":\"EUR\",\"card\":{\"pan\":\"4024007197526238\",\"expiry\":\"0024\",\"cvv\":\"789\"},\"cardholder\":{\"name\":\"First Last\",\"email\":\"test@domain.com\"}}";
 
@@ -142,7 +142,7 @@ public class PaymentControllerTest {
     }
 
     private static PaymentDto getMockPaymentDto() {
-        CardDto card = new CardDto("4024007197526238", "0624", "789");
+        CardDto card = new CardDto("4024007197526238", "0630", "789");
         CardHolderDto cardHolder = new CardHolderDto("First Last", "test@domain.com");
         PaymentDto paymentDto = new PaymentDto("1234567", "1299", "EUR", cardHolder, card);
         return paymentDto;
