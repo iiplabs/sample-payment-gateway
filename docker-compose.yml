@@ -29,7 +29,8 @@ services:
       - '${BE_SERVER_PORT}:${BE_SERVER_PORT}'
     volumes:
       - ./tmpvol:/tmp
-    environment: 
+    environment:
+      SPRING_PROFILES_ACTIVE: ${BUILD_PROFILE}
       AUDIT_JSON: ${AUDIT_JSON}
       BE_SERVER_PORT: ${BE_SERVER_PORT}
       BE_DB_URL: ${BE_DB_URL}
